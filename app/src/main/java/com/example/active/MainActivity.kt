@@ -17,12 +17,12 @@ class MainActivity : AppCompatActivity() {
         viewModelFactory = MainActivityViewModelFactory(125)
         viewModel = ViewModelProvider(this,viewModelFactory).get(MainActivityViewModel::class.java)
 
+        binding.viewModel = viewModel
+
         viewModel.countData.observe(this, Observer {
             binding.countText.text = it.toString()
         })
 
-        binding.button.setOnClickListener{
-            viewModel.updateCount()
-        }
+
     }
 }
