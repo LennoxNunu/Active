@@ -18,11 +18,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this,viewModelFactory).get(MainActivityViewModel::class.java)
 
         binding.viewModel = viewModel
-
-        viewModel.countData.observe(this, Observer {
-            binding.countText.text = it.toString()
-        })
-
+        binding.lifecycleOwner = this
 
     }
 }
