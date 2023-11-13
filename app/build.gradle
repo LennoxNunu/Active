@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.example.active'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.active"
@@ -52,7 +52,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     // Annotation processor
-    kapt "androidx.lifecycle:lifecycle-compiler-ktx:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     //Room
     implementation "androidx.room:room-runtime:$room_version"
