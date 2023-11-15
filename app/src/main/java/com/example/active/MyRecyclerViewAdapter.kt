@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.active.databinding.ListItemBinding
 import com.example.active.db.Subscriber
 
-class MyRecyclerViewAdapter(private  val subscribersList: List<Subscriber>):RecyclerView.Adapter<MyViewHolder>()  {
+class MyRecyclerViewAdapter(
+    private  val subscribersList: List<Subscriber>,
+    private val clickListener:(Subscriber)-> Unit):RecyclerView.Adapter<MyViewHolder>()  {
+
     private  lateinit var binding: ListItemBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-//        binding = ListItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-//        return MyViewHolder(binding)
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ListItemBinding =
@@ -27,14 +28,17 @@ class MyRecyclerViewAdapter(private  val subscribersList: List<Subscriber>):Recy
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val subscriber = subscribersList[position]
-        holder.bind(subscriber)
+        holder.bind(subscriber,clickListener)
     }
 
 }
 
 class MyViewHolder(val binding:ListItemBinding):RecyclerView.ViewHolder(binding.root){
-    fun bind(subscriber: Subscriber){
+    fun bind(subscriber: Subscriber,clickListener:(Subscriber)-> Unit){
          binding.nameTextView.text = subscriber.name
          binding.emailTextView.text = subscriber.email
+        binding.listItemLayout.setOnClickListener{
+            clickListener(subscriber)
+    }
     }
 }
