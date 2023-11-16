@@ -9,15 +9,15 @@ import com.example.active.databinding.ListItemBinding
 import com.example.active.db.Subscriber
 
 class MyRecyclerViewAdapter(
-    private  val subscribersList: List<Subscriber>,
-    private val clickListener:(Subscriber)-> Unit):RecyclerView.Adapter<MyViewHolder>()  {
+    private val clickListener: (Subscriber) -> Unit
+) : RecyclerView.Adapter<MyViewHolder>() {
 
-    private  lateinit var binding: ListItemBinding
+    private val subscribersList = ArrayList<Subscriber>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ListItemBinding =
-            DataBindingUtil.inflate(layoutInflater,R.layout.list_item,parent,false)
+            DataBindingUtil.inflate(layoutInflater, R.layout.list_item, parent, false)
         return MyViewHolder(binding)
     }
 
@@ -28,17 +28,22 @@ class MyRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val subscriber = subscribersList[position]
-        holder.bind(subscriber,clickListener)
+        holder.bind(subscriber, clickListener)
+    }
+
+    fun setList(subscribers: List<Subscriber>) {
+        subscribersList.clear()
+        subscribersList.addAll(subscribers)
     }
 
 }
 
-class MyViewHolder(val binding:ListItemBinding):RecyclerView.ViewHolder(binding.root){
-    fun bind(subscriber: Subscriber,clickListener:(Subscriber)-> Unit){
-         binding.nameTextView.text = subscriber.name
-         binding.emailTextView.text = subscriber.email
-        binding.listItemLayout.setOnClickListener{
+class MyViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(subscriber: Subscriber, clickListener: (Subscriber) -> Unit) {
+        binding.nameTextView.text = subscriber.name
+        binding.emailTextView.text = subscriber.email
+        binding.listItemLayout.setOnClickListener {
             clickListener(subscriber)
-    }
+        }
     }
 }
