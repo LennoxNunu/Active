@@ -15,13 +15,15 @@ class MainActivity : AppCompatActivity() {
         val dao = StudentDatabase.getInstance(application).studentDAO
 
         val nameEditText = findViewById<EditText>(R.id.etName)
+        val emailEditText = findViewById<EditText>(R.id.etEmail)
         val button = findViewById<Button>(R.id.btnSubmit)
 
         button.setOnClickListener{
             lifecycleScope.launch {
                 nameEditText.text.let{
-                    dao.insertStudent(Student(0,it.toString()))
+                    dao.insertStudent(Student(0,it.toString(),emailEditText.text.toString()))
                     nameEditText.setText("")
+                    emailEditText.setText("")
                 }
             }
         }
