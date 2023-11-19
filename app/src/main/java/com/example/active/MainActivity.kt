@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,15 @@ class MainActivity : AppCompatActivity() {
         val retService = RetrofitInstance
             .getRetrofitInstance()
             .create(AlbumService::class.java)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = retService.getAlbum(3)
+            val title = response.body()?.title
+            CoroutineScope(Dispatchers.Main).launch {
+                Toast.makeText(applicationContext,title,Toast.LENGTH_LONG).show()
+            }
+        }
+
 
         CoroutineScope(Dispatchers.IO).launch {
 
