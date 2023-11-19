@@ -9,6 +9,7 @@ import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +24,9 @@ class MainActivity : AppCompatActivity() {
             .getRetrofitInstance()
             .create(AlbumService::class.java)
 
-        getRequestWithQueryParameters()
-        getRequestWithPathParameters(text_view)
+       // getRequestWithQueryParameters()
+       // getRequestWithPathParameters(text_view)
+        uploadAlbum(text_view)
     }
 
     private fun getRequestWithQueryParameters(){
@@ -58,6 +60,29 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun uploadAlbum(text_view:TextView){
+        val album = AlbumsItem(0,"My title",3)
+        CoroutineScope(Dispatchers.IO).launch {
+            val response: Response<AlbumsItem> = retService.uploadAlbum(album)
+            if(response.isSuccessful){
+                val receivedAlbumsItem:AlbumsItem? = response.body()
+
+                receivedAlbumsItem?.let {
+                    CoroutineScope(Dispatchers.Main).launch {
+
+                            val result: String = " " + "Album Title : ${it.title}" + "\n" +
+                                    " " + "Album id : ${it.id}" + "\n" +
+                                    " " + "User id : ${it.userId}" + "\n\n\n"
+
+                            text_view.text = result
+
+                    }
+                }
+
             }
         }
     }
