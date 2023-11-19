@@ -12,16 +12,22 @@ import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var retService: AlbumService
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val text_view = findViewById<TextView>(R.id.text_view)
 
-        val retService = RetrofitInstance
+         retService = RetrofitInstance
             .getRetrofitInstance()
             .create(AlbumService::class.java)
 
+        getRequestWithQueryParameters()
+        getRequestWithPathParameters(text_view)
+    }
+
+    private fun getRequestWithQueryParameters(){
         CoroutineScope(Dispatchers.IO).launch {
             val response = retService.getAlbum(3)
             val title = response.body()?.title
@@ -29,8 +35,10 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext,title,Toast.LENGTH_LONG).show()
             }
         }
+    }
 
 
+    private fun getRequestWithPathParameters(text_view:TextView){
         CoroutineScope(Dispatchers.IO).launch {
 
             val response = retService.getSortedAlbums(3)
@@ -53,4 +61,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }
