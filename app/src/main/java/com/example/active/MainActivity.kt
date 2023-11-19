@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val response = retService.getAlbums()
+            val response = retService.getSortedAlbums(3)
 
             if (response.isSuccessful) {
                 val albumsList = response.body()
