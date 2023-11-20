@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +15,7 @@ import androidx.core.app.NotificationCompat
 
 class MainActivity : AppCompatActivity() {
     private val channelID = "com.example.active.channel1"
-    private var notificationManager:NotificationManager? =null
+    private var notificationManager: NotificationManager? = null
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,28 +23,37 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val button = findViewById<Button>(R.id.button)
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        createNotificationChannel(channelID,"DemoChannel","this is a demo")
+        createNotificationChannel(channelID, "DemoChannel", "this is a demo")
         button.setOnClickListener {
             displayNotification()
         }
     }
 
-    private fun displayNotification(){
+    private fun displayNotification() {
         val notificationId = 45
-        val notification = NotificationCompat.Builder(this@MainActivity,channelID)
+        val tapResultIntent = Intent(this, SecondActivity::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResultIntent,
+            PendingIntent.FLAG_MUTABLE
+        )
+
+        val notification: Notification = NotificationCompat.Builder(this@MainActivity, channelID)
             .setContentTitle("Demo Title")
             .setContentText("This is a demo notification")
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
             .build()
-        notificationManager?.notify(notificationId,notification)
+        notificationManager?.notify(notificationId, notification)
     }
 
-    private fun createNotificationChannel(id:String,name:String,channelDescription:String){
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            val importance:Int = NotificationManager.IMPORTANCE_HIGH
-            val channel:NotificationChannel = NotificationChannel(id,name,importance).apply{
+    private fun createNotificationChannel(id: String, name: String, channelDescription: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance: Int = NotificationManager.IMPORTANCE_HIGH
+            val channel: NotificationChannel = NotificationChannel(id, name, importance).apply {
                 description = channelDescription
             }
             notificationManager?.createNotificationChannel(channel)
