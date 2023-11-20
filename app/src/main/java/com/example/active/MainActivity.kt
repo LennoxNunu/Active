@@ -13,11 +13,12 @@ import android.os.Bundle
 import android.telecom.Call.Details
 import android.widget.Button
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 
 class MainActivity : AppCompatActivity() {
     private val channelID = "com.example.active.channel1"
     private var notificationManager: NotificationManager? = null
-
+    private  val KEY_REPLY = "key_reply"
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,15 @@ class MainActivity : AppCompatActivity() {
             tapResultIntent,
             PendingIntent.FLAG_MUTABLE
         )
+
+        //reply action
+        val remoteInput: RemoteInput = RemoteInput.Builder(KEY_REPLY).run{
+            setLabel("Insert your name here")
+            build()
+        }
+
+        val replyAction:NotificationCompat.Action = NotificationCompat.Action.Builder(
+            0,"REPLY",pendingIntent).addRemoteInput(remoteInput).build()
 
 
         //action button 1
@@ -70,9 +80,9 @@ class MainActivity : AppCompatActivity() {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
             .addAction(action2)
             .addAction(action3)
+            .addAction(replyAction)
             .build()
         notificationManager?.notify(notificationId, notification)
     }
