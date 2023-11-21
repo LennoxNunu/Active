@@ -18,7 +18,9 @@ class DownloadingWorker(context: Context,params:WorkerParameters): Worker(contex
             for (i: Int in 0..3000){
                 Log.i("Mytag","Downloading $i")
             }
-
+            val time = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+            val currentDate = time.format(Date())
+            Log.i("Mytag","Completed $currentDate")
             return Result.success()
         }catch (e:Exception){
             return Result.failure()
