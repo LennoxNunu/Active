@@ -3,7 +3,9 @@ package com.example.active
 import android.util.Log
 import javax.inject.Inject
 
-class MemoryCard @Inject constructor(){
+
+//lets assume we don't own this class, 'third party class'
+class MemoryCard {
     init {
         Log.i("MTTAG","Memory Card Constructed")
     }
