@@ -3,7 +3,7 @@ package com.example.active
 import android.util.Log
 
 class SIMCard( ) {
-    private lateinit var serviceProvider: ServiceProvider
+    public lateinit var serviceProvider: ServiceProvider
     init {
         Log.i("MYTAG","SIM Card Constructed")
     }
