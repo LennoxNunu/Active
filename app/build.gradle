@@ -39,6 +39,7 @@ android {
 dependencies {
     def lifecycle_version = "2.6.2"
     def arch_version = "2.2.0"
+    def mockitoVersion = "5.8.0"
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -49,6 +50,8 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$arch_version"
     // Test Assertion
     testImplementation "com.google.truth:truth:1.1.4"
+    // Optional -- Mockito framework
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
