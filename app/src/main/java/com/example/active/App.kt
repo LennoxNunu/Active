@@ -1,14 +1,7 @@
 package com.example.active
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class App: Application() {
-    lateinit var dataComponent: DataComponent
-
-    override fun onCreate() {
-        super.onCreate()
-        dataComponent = DaggerDataComponent.builder().build()
-
-    }
-
-}
+@HiltAndroidApp
+class App: Application()
