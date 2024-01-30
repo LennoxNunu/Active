@@ -42,4 +42,5 @@
 38 - viewBinding <br />
 39 - androidServiceViewBinding <br />
 40 - androidServicesAndBroadcastReceiversWithViewBinding <br />
-41 - hilt
+41 - hilt <br />
+42 - stateflow
