@@ -2,6 +2,7 @@ package com.example.active
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenCreated {
             viewModel.flowTotal.collect{
                 binding.resultTextView.text = it.toString()
+            }
+        }
+
+        lifecycleScope.launchWhenCreated {
+            viewModel.message.collect{
+                Toast.makeText(this@MainActivity,it,Toast.LENGTH_LONG).show()
             }
         }
 
