@@ -43,4 +43,5 @@
 39 - androidServiceViewBinding <br />
 40 - androidServicesAndBroadcastReceiversWithViewBinding <br />
 41 - hilt <br />
-42 - stateflow
+42 - stateflow <br />
+43 - sharedflow
