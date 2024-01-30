@@ -3,17 +3,25 @@ package com.example.active
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class MainActivityViewModel(startingTotal : Int) : ViewModel() {
-    private var count = MutableLiveData<Int>()
-    val countData : LiveData<Int>
-    get() = count
+
+
+    private val _flowTotal = MutableStateFlow<Int>(0)
+    val flowTotal : StateFlow<Int> = _flowTotal
+    //get() = _flowTotal
+
+
 
     init {
-        count.value = startingTotal
+
+        _flowTotal.value = startingTotal
     }
 
-    fun updateCount(){
-        count.value = (count.value)?.plus(1)
+    fun setTotal(input:Int){
+
+        _flowTotal.value = (_flowTotal.value).plus(input)
     }
 }
